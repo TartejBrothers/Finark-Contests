@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Form from "./form";
 import "../styles/styles.css";
 import "../styles/contests.css";
 import logo from "../images/logo.jpeg";
@@ -7,6 +8,7 @@ import profile from "../images/icons/profile.png";
 import filter from "../images/icons/filter.png";
 import exportimg from "../images/icons/export.png";
 import plus from "../images/icons/plus.png";
+
 export default function Contests() {
   const [contests, setcontests] = useState([]);
 
@@ -29,6 +31,21 @@ export default function Contests() {
       console.error("Error fetching data:", error);
     }
   }
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const openForm = () => {
+    setIsFormOpen(true);
+  };
+
+  const closeForm = () => {
+    setIsFormOpen(false);
+  };
+
+  const handleFormSubmitSuccess = () => {
+    refreshList();
+  };
+
   return (
     <div className="contestsmain">
       <div className="contestsmenu">
@@ -74,7 +91,7 @@ export default function Contests() {
               <img src={exportimg} alt="Export" />
               Export
             </div>
-            <div className="actionsright">
+            <div className="actionsright" onClick={openForm}>
               <img src={plus} alt="Plus" />
               Create Contest
             </div>
@@ -101,6 +118,16 @@ export default function Contests() {
           </tbody>
         </table>
       </div>
+      {isFormOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <Form
+              onClose={closeForm}
+              onSubmitSuccess={handleFormSubmitSuccess}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
