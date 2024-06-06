@@ -59,10 +59,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 30px;
 }
 .queryheader h1 {
   font-size: 20px;
   font-weight: 500;
+}
+.queryheader input {
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid #000;
 }
 .queryright {
   display: flex;
@@ -77,10 +83,32 @@
   border-radius: 10px;
   display: flex;
   align-items: center;
-  padding-right: 10px;
+  padding: 7.5px;
+  gap: 10px;
 }
-.actionsleft img,
+.actionsleft img {
+  height: 30px;
+}
+.actionsright {
+  background-color: #4b46dc;
+  color: #fff;
+}
 .actionsright img {
-  height: 20px;
-  padding: 5px;
+  background-color: #fff;
+  border-radius: 100%;
+  height: 15px;
+}
+.contestsTable {
+  width: 100%;
+  padding: 30px;
+}
+
+.contestsTable thead {
+  background-color: #f5fafa;
+}
+.contestsTable th {
+  padding: 20px 10px;
+}
+.contestsTable td {
+  padding: 10px;
 }

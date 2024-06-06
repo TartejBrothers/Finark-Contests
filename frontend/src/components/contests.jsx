@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/styles.css";
 import "../styles/contests.css";
 import logo from "../images/logo.jpeg";
@@ -7,7 +7,28 @@ import profile from "../images/icons/profile.png";
 import filter from "../images/icons/filter.png";
 import exportimg from "../images/icons/export.png";
 import plus from "../images/icons/plus.png";
-export default function contests() {
+export default function Contests() {
+  const [contests, setcontests] = useState([]);
+
+  const Api_url = "https://finark-backend.vercel.app/api/";
+
+  useEffect(() => {
+    refreshList();
+  }, []);
+
+  async function refreshList() {
+    try {
+      const response = await fetch(Api_url + "contest");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      setcontests(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
   return (
     <div className="contestsmain">
       <div className="contestsmenu">
@@ -59,6 +80,26 @@ export default function contests() {
             </div>
           </div>
         </div>
+        <table className="contestsTable">
+          <thead>
+            <tr>
+              <th>Contest Id</th>
+              <th>Contest Name</th>
+              <th>Contest Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contests.map((contest) => (
+              <tr key={contest._id}>
+                <td>{contest.contestId}</td>
+                <td>{contest.contestName}</td>
+                <td>{contest.createdDate}</td>
+                <td>{contest.contestStatus}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
