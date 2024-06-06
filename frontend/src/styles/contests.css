@@ -36,3 +36,51 @@
   list-style-type: none;
   font-weight: 500;
 }
+.contestsbody {
+  padding-top: 20px;
+  width: 100%;
+}
+.headerbody {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
+  width: 100%;
+  padding-right: 40px;
+}
+.headerelement {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.headerelement img {
+  height: 30px;
+}
+.queryheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.queryheader h1 {
+  font-size: 20px;
+  font-weight: 500;
+}
+.queryright {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+.actionsright,
+.actionsleft {
+  border: 1px solid #000;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+.actionsleft img,
+.actionsright img {
+  height: 20px;
+  padding: 5px;
+}
