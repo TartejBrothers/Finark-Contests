@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Form from "./form";
+import Filter from "./filter";
 import "../styles/styles.css";
 import "../styles/contests.css";
 import logo from "../images/logo.jpeg";
@@ -10,29 +11,53 @@ import exportimg from "../images/icons/export.png";
 import plus from "../images/icons/plus.png";
 
 export default function Contests() {
-  const [contests, setcontests] = useState([]);
+  const [contests, setContests] = useState([]);
+  const [filteredContests, setFilteredContests] = useState([]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filters, setFilters] = useState({});
 
   const Api_url = "https://finark-backend.vercel.app/api/";
 
-  useEffect(() => {
-    refreshList();
-  }, []);
-
-  async function refreshList() {
+  const refreshList = useCallback(async () => {
     try {
       const response = await fetch(Api_url + "contest");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
-      setcontests(data);
+      setContests(data);
+      applyFilters(data, filters);
       console.log(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }
+  }, [filters]);
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  useEffect(() => {
+    refreshList();
+  }, [refreshList]);
+
+  const applyFilters = (data, filters) => {
+    let filteredData = data;
+    if (filters.contestStatus) {
+      filteredData = filteredData.filter(
+        (contest) => contest.contestStatus === filters.contestStatus
+      );
+    }
+    if (filters.startDate) {
+      filteredData = filteredData.filter(
+        (contest) =>
+          new Date(contest.createdDate) >= new Date(filters.startDate)
+      );
+    }
+    if (filters.endDate) {
+      filteredData = filteredData.filter(
+        (contest) => new Date(contest.createdDate) <= new Date(filters.endDate)
+      );
+    }
+    setFilteredContests(filteredData);
+  };
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -42,8 +67,21 @@ export default function Contests() {
     setIsFormOpen(false);
   };
 
+  const openFilter = () => {
+    setIsFilterOpen(true);
+  };
+
+  const closeFilter = () => {
+    setIsFilterOpen(false);
+  };
+
   const handleFormSubmitSuccess = () => {
     refreshList();
+  };
+
+  const handleFilterApply = (appliedFilters) => {
+    setFilters(appliedFilters);
+    applyFilters(contests, appliedFilters);
   };
 
   return (
@@ -83,7 +121,7 @@ export default function Contests() {
           </div>
           <div className="queryright">
             <input type="text" placeholder="Search Contests" />
-            <div className="actionsleft">
+            <div className="actionsleft" onClick={openFilter}>
               <img src={filter} alt="Filter" />
               Filter
             </div>
@@ -107,7 +145,7 @@ export default function Contests() {
             </tr>
           </thead>
           <tbody>
-            {contests.map((contest) => (
+            {filteredContests.map((contest) => (
               <tr key={contest._id}>
                 <td>{contest.contestId}</td>
                 <td>{contest.contestName}</td>
@@ -125,6 +163,13 @@ export default function Contests() {
               onClose={closeForm}
               onSubmitSuccess={handleFormSubmitSuccess}
             />
+          </div>
+        </div>
+      )}
+      {isFilterOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <Filter onClose={closeFilter} onApply={handleFilterApply} />
           </div>
         </div>
       )}
