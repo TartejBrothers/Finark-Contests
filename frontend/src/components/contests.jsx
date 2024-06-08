@@ -10,6 +10,8 @@ import profile from "../images/icons/profile.png";
 import filter from "../images/icons/filter.png";
 import plus from "../images/icons/plus.png";
 import griplines from "../images/icons/griplines.png";
+import cross from "../images/icons/cross.png";
+
 export default function Contests() {
   const location = useLocation();
   const { name } = location.state || {};
@@ -19,6 +21,7 @@ export default function Contests() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const Api_url = "https://finark-backend.vercel.app/api/";
 
@@ -100,13 +103,18 @@ export default function Contests() {
     setSearchQuery(event.target.value);
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  };
+
   return (
     <div className="contestsmain">
-      <div className="contestsmenu">
+      <div className={`contestsmenu ${isMenuOpen ? "open" : ""}`}>
         <div className="menuheader">
           <img src={logo} alt="Logo" />
-          <hr />
+          <img src={cross} alt="" className="griplines" onClick={toggleMenu} />
         </div>
+        <hr />
         <div className="menumain">
           <ul>
             <li>Contests</li>
@@ -116,6 +124,7 @@ export default function Contests() {
             <li>Users</li>
             <li>Settings</li>
             <li>Profile</li>
+
             <li className="logout">
               <Link to="/login">Logout</Link>
             </li>
@@ -125,7 +134,12 @@ export default function Contests() {
       <div className="contestsbody">
         <div className="headerbody">
           <div className="headerelement">
-            <img src={griplines} alt="Griplines" className="griplines" />
+            <img
+              src={griplines}
+              alt="Griplines"
+              className="griplines"
+              onClick={toggleMenu}
+            />
           </div>
           <div className="headerelement">
             <img src={wallet} alt="Wallet" />
@@ -179,6 +193,16 @@ export default function Contests() {
           </tbody>
         </table>
       </div>
+      {isFormOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <Form
+              onClose={closeForm}
+              onSubmitSuccess={handleFormSubmitSuccess}
+            />
+          </div>
+        </div>
+      )}
       {isFormOpen && (
         <div className="modal">
           <div className="modal-content">
