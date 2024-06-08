@@ -7,7 +7,6 @@ import logo from "../images/logo.jpeg";
 import wallet from "../images/icons/wallet.png";
 import profile from "../images/icons/profile.png";
 import filter from "../images/icons/filter.png";
-import exportimg from "../images/icons/export.png";
 import plus from "../images/icons/plus.png";
 
 export default function Contests() {
@@ -16,6 +15,7 @@ export default function Contests() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
   const Api_url = "https://finark-backend.vercel.app/api/";
 
@@ -27,18 +27,18 @@ export default function Contests() {
       }
       const data = await response.json();
       setContests(data);
-      applyFilters(data, filters);
+      applyFilters(data, filters, searchQuery);
       console.log(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [filters]);
+  }, [filters, searchQuery]);
 
   useEffect(() => {
     refreshList();
-  }, [refreshList]);
+  }, [refreshList]); // Include refreshList as a dependency
 
-  const applyFilters = (data, filters) => {
+  const applyFilters = (data, filters, searchQuery) => {
     let filteredData = data;
     if (filters.contestStatus) {
       filteredData = filteredData.filter(
@@ -54,6 +54,15 @@ export default function Contests() {
     if (filters.endDate) {
       filteredData = filteredData.filter(
         (contest) => new Date(contest.createdDate) <= new Date(filters.endDate)
+      );
+    }
+    if (searchQuery) {
+      filteredData = filteredData.filter(
+        (contest) =>
+          contest.contestName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          contest.contestId.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     setFilteredContests(filteredData);
@@ -81,7 +90,11 @@ export default function Contests() {
 
   const handleFilterApply = (appliedFilters) => {
     setFilters(appliedFilters);
-    applyFilters(contests, appliedFilters);
+    applyFilters(contests, appliedFilters, searchQuery);
+  };
+
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -100,7 +113,7 @@ export default function Contests() {
             <li>Users</li>
             <li>Settings</li>
             <li>Profile</li>
-            <li>Company Logo</li>
+            <li>Logout</li>
           </ul>
         </div>
       </div>
@@ -120,15 +133,17 @@ export default function Contests() {
             <h1>Contests</h1>
           </div>
           <div className="queryright">
-            <input type="text" placeholder="Search Contests" />
+            <input
+              type="text"
+              placeholder="Search Contests"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            />
             <div className="actionsleft" onClick={openFilter}>
               <img src={filter} alt="Filter" />
               Filter
             </div>
-            <div className="actionsleft">
-              <img src={exportimg} alt="Export" />
-              Export
-            </div>
+
             <div className="actionsright" onClick={openForm}>
               <img src={plus} alt="Plus" />
               Create Contest
