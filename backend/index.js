@@ -79,6 +79,50 @@ app.post("/api/contest", async (req, res) => {
   }
 });
 
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
+
+const User = mongoose.model("User", userSchema);
+
+app.get("/api/user", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).send(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/api/user", async (req, res) => {
+  try {
+    const newUser = new User({
+      name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      password: req.body.password,
+    });
+
+    await newUser.save();
+    res.status(200).json({ message: "User added successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
 const start = async () => {
   try {
     await mongoose.connect(connectString, {
