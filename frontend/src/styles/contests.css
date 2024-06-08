@@ -1,16 +1,27 @@
 .contestsmain {
+  position: relative;
   width: 100vw;
   min-height: 100vh;
   display: flex;
+  overflow-x: hidden;
 }
 
 .contestsmenu {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 30%;
   max-width: 300px;
   min-height: 100vh;
   background-color: #daecf3;
   display: flex;
   flex-direction: column;
+  transition: width 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.contestsmenu.open {
+  width: 80%;
 }
 
 .menuheader img {
@@ -24,7 +35,7 @@
 .menumain ul {
   height: 100%;
   width: 100%;
-  padding-left: 30px;
+  padding-inline: 30px;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -32,14 +43,22 @@
 }
 
 .menumain ul li {
-  font-size: 24px;
+  font-size: 20px;
   list-style-type: none;
   font-weight: 500;
+  padding: 10px 10px;
 }
+
 .contestsbody {
   padding-top: 20px;
   width: 100%;
+  margin-left: 30%;
 }
+
+.griplines {
+  display: none;
+}
+
 .headerbody {
   display: flex;
   justify-content: flex-end;
@@ -47,29 +66,35 @@
   width: 100%;
   padding-right: 40px;
 }
+
 .headerelement {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .headerelement img {
   height: 30px;
 }
+
 .queryheader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 30px;
 }
+
 .queryheader h1 {
   font-size: 20px;
   font-weight: 500;
 }
+
 .queryheader input {
   padding: 10px 10px;
   border-radius: 10px;
   border: 1px solid #000;
 }
+
 .queryright {
   display: flex;
   align-items: center;
@@ -77,6 +102,7 @@
   justify-content: flex-end;
   padding-right: 10px;
 }
+
 .actionsright,
 .actionsleft {
   border: 1px solid #000;
@@ -86,18 +112,22 @@
   padding: 7.5px;
   gap: 10px;
 }
+
 .actionsleft img {
   height: 30px;
 }
+
 .actionsright {
   background-color: #4b46dc;
   color: #fff;
 }
+
 .actionsright img {
   background-color: #fff;
   border-radius: 100%;
   height: 15px;
 }
+
 .contestsTable {
   width: 100%;
   padding: 30px;
@@ -106,9 +136,11 @@
 .contestsTable thead {
   background-color: #f5fafa;
 }
+
 .contestsTable th {
   padding: 20px 10px;
 }
+
 .contestsTable td {
   padding: 10px;
 }
@@ -123,12 +155,84 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 1000;
 }
 
 .modal-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
-  z-index: 11;
+  z-index: 1010;
+}
+
+.logout {
+  border-radius: 20px;
+  color: #ffff;
+  background-color: #f5363c;
+}
+
+a {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .contestsmenu {
+    width: 80%;
+    z-index: 10;
+    display: none;
+    max-width: 100vw;
+  }
+  .menuheader {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10px;
+    align-items: center;
+  }
+  .menuheader .griplines {
+    height: 40px;
+    width: 40px;
+  }
+  .contestsmenu.open {
+    display: flex;
+    z-index: 100;
+  }
+  .contestsbody {
+    margin-left: 0%;
+  }
+
+  .griplines {
+    display: block;
+  }
+
+  .headerbody {
+    width: 100vw;
+    justify-content: center;
+    padding-right: 0px;
+  }
+
+  .queryheader {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px 0 10px;
+  }
+
+  .queryright {
+    justify-content: center;
+    padding: 10px 0;
+    flex-direction: column;
+  }
+
+  .contestsTable {
+    overflow-x: scroll;
+    padding: 10px 0px;
+    font-size: 12px;
+  }
+
+  .contestsTable th {
+    font-size: 14px;
+  }
+
+  .contestsTable tr {
+    font-size: 10px;
+  }
 }
