@@ -12,7 +12,6 @@ function Login() {
     e.preventDefault();
 
     try {
-      // Fetch user data from the API
       const response = await fetch(
         `https://finark-backend.vercel.app/api/user?phoneNumber=${phoneNumber}`
       );
@@ -20,11 +19,11 @@ function Login() {
       if (response.ok) {
         const userData = await response.json();
 
-        // Check if user data exists and matches the entered password
         if (userData.length > 0 && userData[0].password === password) {
           console.log("User logged in successfully");
-          // Navigate to '/' page
-          navigate("/");
+
+          // Pass the user's name to the '/' page
+          navigate("/", { state: { name: userData[0].name } });
         } else {
           alert("Invalid phone number or password");
         }
