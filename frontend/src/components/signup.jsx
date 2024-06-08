@@ -40,7 +40,7 @@ function SignUp() {
       if (response.ok) {
         console.log("User signed up successfully");
         // Redirect to login page
-        window.location.href = "/login";
+        window.location.href = "/";
       } else {
         const errorData = await response.json();
         console.error("Failed to sign up", errorData);
@@ -146,7 +146,7 @@ function SignUp() {
             </div>
           </form>
           <p>
-            Already Have an Account <Link to="/login">Login</Link>
+            Already Have an Account <Link to="/">Login</Link>
           </p>
         </div>
       </div>

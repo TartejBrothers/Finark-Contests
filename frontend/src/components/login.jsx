@@ -23,7 +23,7 @@ function Login() {
           console.log("User logged in successfully");
 
           // Pass the user's name to the '/' page
-          navigate("/", { state: { name: userData[0].name } });
+          navigate("/contests", { state: { name: userData[0].name } });
         } else {
           alert("Invalid phone number or password");
         }
