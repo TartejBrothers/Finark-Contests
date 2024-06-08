@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Form from "./form";
 import Filter from "./filter";
 import "../styles/styles.css";
@@ -9,7 +9,7 @@ import wallet from "../images/icons/wallet.png";
 import profile from "../images/icons/profile.png";
 import filter from "../images/icons/filter.png";
 import plus from "../images/icons/plus.png";
-
+import griplines from "../images/icons/griplines.png";
 export default function Contests() {
   const location = useLocation();
   const { name } = location.state || {};
@@ -39,7 +39,7 @@ export default function Contests() {
 
   useEffect(() => {
     refreshList();
-  }, [refreshList]); // Include refreshList as a dependency
+  }, [refreshList]);
 
   const applyFilters = (data, filters, searchQuery) => {
     let filteredData = data;
@@ -116,12 +116,17 @@ export default function Contests() {
             <li>Users</li>
             <li>Settings</li>
             <li>Profile</li>
-            <li>Logout</li>
+            <li className="logout">
+              <Link to="/login">Logout</Link>
+            </li>
           </ul>
         </div>
       </div>
       <div className="contestsbody">
         <div className="headerbody">
+          <div className="headerelement">
+            <img src={griplines} alt="Griplines" className="griplines" />
+          </div>
           <div className="headerelement">
             <img src={wallet} alt="Wallet" />
             <p>99889</p>
