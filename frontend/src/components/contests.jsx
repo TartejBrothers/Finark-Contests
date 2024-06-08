@@ -126,7 +126,7 @@ export default function Contests() {
             <li>Profile</li>
 
             <li className="logout">
-              <Link to="/login">Logout</Link>
+              <Link to="/">Logout</Link>
             </li>
           </ul>
         </div>
