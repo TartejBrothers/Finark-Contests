@@ -1,10 +1,43 @@
-import { Link } from "react-router-dom";
-import React from "react";
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import unhide from "../images/icons/unhide.png";
 
 function Login() {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `https://finark-backend.vercel.app/api/user?phoneNumber=${phoneNumber}`
+      );
+
+      if (response.ok) {
+        const userData = await response.json();
+
+        if (userData.length > 0 && userData[0].password === password) {
+          console.log("User logged in successfully");
+
+          // Pass the user's name to the '/' page
+          navigate("/", { state: { name: userData[0].name } });
+        } else {
+          alert("Invalid phone number or password");
+        }
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to log in", errorData);
+        alert(`Error: ${errorData.message || "Failed to log in"}`);
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Error logging in. Please try again.");
+    }
+  };
+
   const changeType = () => {
     var x = document.getElementById("password");
     if (x.type === "password") {
@@ -13,6 +46,7 @@ function Login() {
       x.type = "password";
     }
   };
+
   return (
     <div className="container">
       <div className="topleft">
@@ -21,11 +55,13 @@ function Login() {
       </div>
       <div className="right">
         <div className="rightcontainer">
-          <form method="post" action="/#">
+          <form onSubmit={handleSubmit}>
             <input
               type="number"
-              name="name"
-              placeholder="Enter Phone No "
+              name="phoneNumber"
+              placeholder="Enter Phone No"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
               style={{ marginBottom: "20px" }}
               required
             />
@@ -41,6 +77,8 @@ function Login() {
                 type="password"
                 name="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 id="password"
               />
@@ -64,7 +102,6 @@ function Login() {
               />
             </div>
           </form>
-
           <p>
             Create a new account? <Link to="/signup">Sign Up</Link>
           </p>

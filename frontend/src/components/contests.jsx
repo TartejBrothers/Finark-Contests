@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import Form from "./form";
 import Filter from "./filter";
 import "../styles/styles.css";
@@ -10,6 +11,8 @@ import filter from "../images/icons/filter.png";
 import plus from "../images/icons/plus.png";
 
 export default function Contests() {
+  const location = useLocation();
+  const { name } = location.state || {};
   const [contests, setContests] = useState([]);
   const [filteredContests, setFilteredContests] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -125,7 +128,7 @@ export default function Contests() {
           </div>
           <div className="headerelement">
             <img src={profile} alt="Profile" />
-            <p>Admin</p>
+            <p>{name}</p>
           </div>
         </div>
         <div className="queryheader">
