@@ -8,7 +8,7 @@ Creating a web application to save contests in MongoDB and develop an API for in
 
 ---
 
-- This project has a frontend and backend set; the backend has been deployed and the API can be used to find the contests.
+- This project has a frontend and backend set, the backend has been deployed and the API can be used to find the contests.
 
 ## Technologies Used
 
