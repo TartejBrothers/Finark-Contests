@@ -31,7 +31,8 @@ Creating a web application to save contests in MongoDB and develop an API for in
 
 ---
 
-[![Watch the video](https://raw.githubusercontent.com/TartejBrothers/Finark-Contests/main/readme/3.jpg)](https://raw.githubusercontent.com/TartejBrothers/Finark-Contests/main/readme/Finark-Web.mp4)
+https://github.com/TartejBrothers/Finark-Contests/assets/112921727/f7e10772-30af-4fac-84cf-5130045b2b01
+
 
 ## Screenshots
 
