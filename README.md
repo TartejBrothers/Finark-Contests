@@ -33,7 +33,6 @@ Creating a web application to save contests in MongoDB and develop an API for in
 
 https://github.com/TartejBrothers/Finark-Contests/assets/112921727/f7e10772-30af-4fac-84cf-5130045b2b01
 
-
 ## Screenshots
 
 ---
@@ -54,10 +53,6 @@ https://github.com/TartejBrothers/Finark-Contests/assets/112921727/f7e10772-30af
 
 ---
 
-[![LinkedIn](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg)](https://www.linkedin.com/in/tartej)
-
-<style>
-  img[alt="LinkedIn"] {
-    width: 5%;
-  }
-</style>
+<a href="https://www.linkedin.com/in/tartej">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" style="width: 5%;">
+</a>
